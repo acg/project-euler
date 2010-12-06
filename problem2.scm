@@ -1,0 +1,5 @@
+(define (aggregate agg next c v) (if (eq? v ()) c (aggregate agg next (agg c v) (next v))))
+(define (fibnextpair t) (list (cadr t) (+ (car t) (cadr t))))
+(define (fibnext p) (if (<= (cadr p) 4000000) (fibnextpair p) '() ))
+(define (fibagg c v) (let ((x (cadr v))) (if (even? x) (+ c x) c)))
+(display (aggregate fibagg fibnext 0 '(1 1)))
