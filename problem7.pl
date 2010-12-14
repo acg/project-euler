@@ -8,18 +8,17 @@ sub sieve
 {
   my $primes = shift;
   my ($n1,$n2) = (shift,shift);
-  my %sieve;
-
-  $sieve{$_} = 1 for ($n1 .. $n2);
+  my @sieve = map $n1+$_ => (0 .. $n2-$n1);
 
   for my $prime (@$primes) {
     my $k0 = $prime * int ($n1 / $prime);
+    $k0 += $prime if $k0 < $n1;
     for (my $k = $k0; $k <= $n2; $k += $prime) {
-      delete $sieve{$k};
+      $sieve[$k-$n1] = undef;
     }
   }
 
-  my @newprimes = sort { $a <=> $b } map { 0+$_ } keys %sieve;
+  my @newprimes = grep defined($_) => @sieve;
   return \@newprimes;
 }
 
