@@ -6,5 +6,5 @@
   (if (null? v) '()
     (if (test? v) v (find-first test? next (next v)))))
 
-(define (aggregate agg next c v) (if (eq? v ()) c (aggregate agg next (agg c v) (next v))))
+(define (aggregate agg next c v) (if (eq? v '()) c (aggregate agg next (agg c v) (next v))))
 
